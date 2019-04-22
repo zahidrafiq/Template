@@ -1,0 +1,402 @@
+﻿// <reference path="mywebapp.ui.shareidea.js" />
+MyWebApp.namespace("UI.ShareIdea");
+
+MyWebApp.UI.ShareIdea = (function () {
+	"use strict";
+	var _isInitialized = false;
+
+	var shareIdeaData;
+	var current_page = 0;
+	var projectList;
+	var memberList = [];
+	var sectionList = [];
+	var file;
+	var projid;
+	var autocompleteObj;
+	var apiBasePath = 'http://localhost:60239/';
+	var PictureName;
+	var token;
+
+	function initialisePage() {
+		if (_isInitialized == false) {
+			_isInitialized = true;
+			
+		
+			BindEvents();
+			autocompleteObj=getAutoCompleteObj();
+			autocompleteObj.InitializeControl();
+			
+
+			}
+	} // initialisePage()
+	function BindEvents() {
+          
+	    $("#submitbtn").unbind('click').bind('click', function (e) {
+	          e.preventDefault();
+	         
+	          GetMemberList();
+	          //alert("after button click length of memberlist is " + memberList.length);
+	        if ($("#title").val().trim() == ""
+                || $('#comment').val().trim() == ""
+                || $('input[name=optradio]:checked').length == 0
+                ) {
+	            MyWebApp.UI.showRoasterMessage("Empty Field(s)", Enums.MessageType.Error, 2000);
+	            return;
+	        }
+	        else {
+	           
+	            MyWebApp.Globals.ShowYesNoPopup({
+	                headerTex: "Save",
+	                bodyText: 'Do you want to Share this project ?',
+	                dataToPass: {
+	                    ProjectTitle: $("#title").val(),
+	                    Description: $('#comment').val().trim(),
+	                    Type: $('input[name=optradio]:checked').val(),
+	                    //PictureName: file.name
+                       },
+	                fnYesCallBack: function ($modalObj, dataObj) {
+                        shareIdea(dataObj);
+	                    $modalObj.hideMe()
+	                }
+	            });
+	        }
+	      
+	        return false;
+	      });
+	      $("#memberbtn").unbind('click').bind('click', function (e) {
+	          e.preventDefault();
+	          AddMember();
+	          debugger;  
+	          return false;
+	      });
+
+	      $("#addMembers").bind('keypress', function (e) {
+	          var code = (e.keyCode ? e.keyCode : e.which);
+	          if (code == 13) {
+	              e.preventDefault();
+	              return false;
+	          }
+
+	      });
+	      $("#lnkUploadFiles").unbind('click').bind('click', function (e) {
+	          e.preventDefault();
+	          //alert("hello file");
+	          debugger;
+	          token = $('#test').data('text');
+	          if (!token) {
+	              alert('An error has occured you cant upload file');
+	              return false;
+	          }
+	          else {
+	              sessionStorage.setItem('accessToken', token);
+	          }
+	          $('#file-upload').trigger('click');
+
+	          /*----------Reset file input control by going to the form-----------*/
+	          $('#file-upload').closest("form").get(0);
+	          return false;
+	      });
+
+	      $('#file-upload').change(function (e) {
+
+	          var files = e.target.files;
+	          for (var i = 0; i < files.length; i++) {
+	              var fileName = files[i].name;
+	              //var fileSize = files[i].size;
+
+	              var ext = fileName.split('.').pop().toLowerCase();
+	              //check if extension is from mentioned list
+	              if ($.inArray(ext, ['pdf', 'jpg']) == -1) {
+	                  alert('Invalid extension!')
+	                  return false;
+	              }
+	          }
+	          UploadDocuments(files);
+	      }); //end of change
+	}// End of BindEvents();
+
+    //============================================================================//
+	function UploadDocuments(attachments) {
+
+	    var data = new FormData();
+	    /*
+        You may send multiple files here.
+        Just add your files in following way with unique names
+        For example
+        data.append("file1", attach1);
+        data.append("file2", attach2);
+
+        */
+	    for (var i = 0; i < attachments.length; i++) {
+	        data.append("file" + i, attachments[i]);
+	    }
+
+	    data.append("anyotherdata", 0);
+
+	    var urltocall = apiBasePath + "Docs/Upload";
+
+	    var defObj = $.ajax({
+	        type: "POST",
+	        url: urltocall,
+	        headers: {
+	            'Authorization': 'Bearer ' + sessionStorage.getItem('accessToken')
+	        },
+	        data: data,
+	        contentType: false,
+	        processData: false,
+	        success: function (resp) {
+	            console.log(resp.data1[0].UniqueName);
+	            debugger;
+	            PictureName = (resp.data1[0].UniqueName);
+	            var $addDiv = $('#actualname');
+	            $addDiv.append(resp.data1[0].ActualFileName);
+	            $addDiv.append(" ");
+	          
+	            
+	            
+	        },
+	        error: function (err, type, httpStatus) {
+
+	        },
+	        complete: function () {
+	            $('#divProgressOverlay').hide();
+	            $('#divProgressStatus').hide();
+	        }
+	    });
+	}//UploadDocument
+
+	function GetMemberList()
+	{
+	    var isValid = true;
+	    $("#tblMember .error").removeClass("error");
+	    $("#tblMember tr").each(function () {
+	        var $subInput = $(this).find("#txtMember");
+	        if ($subInput.val() == "") {
+	            $subInput.addClass("error");
+	            isValid = false;
+	        }
+        });
+
+	    if (isValid == false) {
+	        alert('Please fix the errors to continue');
+	        return false;
+	    }
+	   
+	    //Extract data and create a list of objects	
+	   
+	    $("#tblMember tr").each(function () {
+	        var memberid = $(this).find("#txtMember").val();
+	        $(this).closest("tr").remove();
+	        memberList.push((memberid));
+	    });
+	    $("#tblMember tr").remove();
+	  
+	   
+    }// End of GetMemberList()
+
+    //============================================================================//
+	function CheckIdeaExist() {
+
+	    var userid = $('#userid').data('text');
+	    var ObjToSend = {
+	        UserId:userid,
+	    };
+	    var dataToSend = JSON.stringify(ObjToSend);
+	    var url = "Project/IdeaExist";
+	    MyWebApp.Globals.MakeAjaxCall("POST", url, dataToSend, function (result) {
+
+	        if (result.success === true) {
+	            MyWebApp.UI.showRoasterMessage(result.msg, Enums.MessageType.Success, 2000);
+	            DisableFeilds();
+	           
+	        }
+	    });
+
+	}
+	function AddMember() {
+	    
+	      
+	        $("input[name='addMembers']").each (function () {
+	            var memberid = $(this).val();
+
+	           
+                if (memberid == "") {
+	                alert('Please fill the empty field');
+	                return false;
+	            }
+                var $table = $("#tblMember");
+	            var $tr = $("<tr>");
+	            if ($("#tblMember tr").length < 5) {
+	                debugger;
+	                var allowSubmit = true;
+	                $("#tblMember tr").each(function () {
+	                   
+	                    var mid = $(this).find("#txtMember").val();
+	                    if (mid == memberid) {
+	                        alert('same member can not entered again');
+	                        allowSubmit = false;
+	                        return false;
+	                    }
+
+	                });
+	                if (allowSubmit) {
+	                    var $td = $("<td>");
+	                    var $textbox = $("<input>").attr("id", "txtMember").attr("type", "text").css('background-color', '#f2f2f2').css('border', 'none').val(memberid);
+
+	                    $td.append($textbox);
+	                    $tr.append($td);
+
+	                    var $td = $("<td>");
+	                    var $button = $("<button>");
+                        $button.text("Remove");
+                        $button.css('background-color', '#668cff!important');
+                        $button.css('color', 'white');
+                        $td.append($button);
+	                    $tr.append($td);
+	                    $table.append($tr);
+                        
+	                    $button.bind("click", function (obj, e) {
+
+	                        //var $isConfirm = confirm("Record will be deleted. Click Ok to continue and Cancel to Ignore");
+	                        //if ($isConfirm == true) {
+	                            $(this).closest("tr").remove();
+	                        //}
+	                    //    else
+	                      //      return false;
+	                    });
+	                }
+	            }// End of if ($("#tblMember tr").length < 5)
+	            else {
+	                alert("You cannot add member more than five");
+	                $(this).val("");
+	                return false;
+	            }
+	            $(this).val("");
+	            
+	        });// End of $("input[name='addMembers']").each())
+	        
+      
+	}// End of Addmember
+
+    //============================================================================//
+	function shareIdea(dataObj) {
+	    //alert(sectionList.length);
+	    GEtsectionlist();
+	    //alert(sectionList.length);
+	    var ObjToSend = {
+	        ProjectTitle: dataObj.ProjectTitle,
+	        Description: dataObj.Description,
+	        Type: dataObj.Type,
+	        FileName: PictureName,
+	        SectionList: sectionList,
+	        MemberList: memberList,
+	    };
+		var dataToSend = JSON.stringify(ObjToSend);
+		var url = "Project/ShareIdea";
+		MyWebApp.Globals.MakeAjaxCall("POST", url, dataToSend, function (result) {
+            
+		    if (result.success === true) {
+		      MyWebApp.UI.showRoasterMessage(result.msg, Enums.MessageType.Success, 2000);
+		      clearFeilds();
+			}
+			else {
+				MyWebApp.UI.showRoasterMessage('some error has occurred', Enums.MessageType.Error);
+			}
+			$('#modal-form').modal('hide');
+		}, function (xhr, ajaxoptions, thrownerror) {
+			MyWebApp.UI.showMessage("#spstatus", 'A problem has occurred while saving this User: "' + thrownerror + '". Please try again.', Enums.MessageType.Error);
+		});
+
+	}
+
+    //============================================================================//
+	function GEtsectionlist()
+	{
+	    $("input[name='sectionName']:checked").each(function () {
+	        var sectionId = $(this).val();
+	        sectionList.push(parseInt(sectionId));
+	        this.checked = false;
+
+	    });
+
+	}
+
+    //=======================================================================================//
+	 function DisableFeilds()
+	{
+
+
+	    $("#title").prop('disabled',true);
+	    $("#comment").prop('disabled', true);
+	    $("#addMembers").prop('disabled', true);
+	    $("#comment").prop('disabled', true);
+	    
+	       
+	    $("#memberbtn").prop('disabled', true);
+	    $("#submitbtn").prop('disabled', true);
+	        $('.check').prop('disabled', true);
+	        $('.rad').prop('disabled', true);
+	      
+	        $('#lnkUploadFiles').attr('disabled', true);
+
+	    
+
+	}
+	
+    //============================================================================//
+	function clearFeilds() {
+
+	    //alert("clear fild");
+	    $("#title").val("");
+	    $("#comment").val("");
+
+	    $("#fileupload").val("");
+	    $("input[name='sectionName']:checked").each(function () {
+	         this.checked = false;
+	       
+	    });
+	    $("#actualname").empty();
+	    $('#actualname').html('');
+	    memberList.length = 0;
+	    //document.getElementById("optradio").checked = false;
+	    $("input[name='optradio']:checked").each(function () {
+	        this.checked = false;
+
+	    });
+	    
+		$(".list").empty();
+	}
+
+    //============================================================================//
+	function getAutoCompleteObj()
+	{
+	    var obj= new JQUIAutoCompleteWrapper({
+	        inputSelector: "#addMembers",
+	        dataSource: "Admin/SearchUser",
+	        queryString: "",
+	        listItemClass: ".listitem",
+	        searchParameterName: "key",
+	        maxItemsToDisplay: "1",
+	        minCharsToTypeForSearch: "2",
+	        watermark: "Type Name/Roll Number",
+	        dropdownHTML: "<a><table><tr><td>Name(RegistrationNumber)</td></tr></table></a>",
+	        fields: {
+	            ValueField: 'ID', DisplayField: 'Name', DescriptionField: 'RegistrationNumber'
+	        },
+	        enableCache: false,
+	        onClear: function () {
+	        }
+               , displayTextFormat: "RegistrationNumber"
+	    });
+	    return obj;
+	}
+    //============================================================================//
+    //============================================================================//
+	return {
+		readyMain: function () {
+		    initialisePage();
+		    CheckIdeaExist();
+		}
+	};
+	
+}()); //MyWebApp.UI.ShareIdea = function 

@@ -1,0 +1,184 @@
+﻿@{
+    ViewBag.Title = "ShareIdea";
+    Layout = "~/Views/Shared/_MainLayout1.cshtml";
+}
+<style>
+
+
+    a[disabled="disabled"] {
+        pointer-events: none;
+    
+    }
+</style>
+
+
+@section Header
+{
+    <script type="text/javascript" src="@Url.Content("~/Scripts/mywebapp/Projects/mywebapp.ui.shareidea.js")?s=@DateTime.UtcNow.Ticks"></script>
+}
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            MyWebApp.UI.ShareIdea.readyMain();
+        });
+    </script>
+}
+
+    @section BreadCrumb
+    {
+            <a href='@Url.Content("~/Project/ShareIdea/")'>Share Idea</a>
+
+    }
+  <span id='test' data-text="@ViewBag.Token" display='none'> </span>
+  <span id='userid' data-text="@PUCIT.AIMRL.SFP.UI.Common.SessionManager.CurrentUser.UserId" display='none'> </span>
+                                    
+<div class="container">
+    <div class="row">
+        <!-- Post Content Column --
+        <div class="col-lg-8">
+            <!-- Title
+            <h1 class="mt-4">Title</h1>-->
+            <!-- Author
+                    <hr>
+
+                    <!-- Date/Time
+            <p>Posted on January 1, 2018 at 12:00 PM</p>
+
+            <hr>
+
+            <!-- Preview Image
+            <img class="img-fluid rounded" src="http://placehold.it/900x300" alt="">
+
+            <hr>-->
+            <!-- Post Content -->
+            <div class="card my-4" style="border:1px solid #aaa;width:600px">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div style="margin-top: 20px ; margin-left : 40px;">
+                            <div class="row" style="margin-top: 25px">
+                                <div class="col-sm-12">
+                                    <h2 style="color:#4d79ff">Share Your Project Idea</h2>
+                                    <br>
+                                    <form class="form-horizontal" id="formvalue">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Title</label>
+                                            <br>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" id="title" type="text" placeholder="Enter title of your project." style="background-color:#f2f2f2;">
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Description</label>
+                                            <br>
+                                            <div class="col-sm-8">
+                                                <textarea class="form-control" rows="5" id="comment" placeholder="Provide description of your project" style="background-color:#f6f2fc;"></textarea>
+                                                <a href="#" id="lnkUploadFiles" class="spice-link">Attatch file!</a><span id="actualname" ></span>
+                                            </div>
+                                            
+                                               <input type="file" id="file-upload" multiple="multiple" name="files" value="" class="file-upload" style="display:none">
+                                                
+                                            </div>
+                                        <br/>
+                                        <div class="form-group" style="margin-top:-30px">
+                                            <label class="col-sm-3 control-label">Type</label>
+                                            <br>
+                                            <div class="col-sm-8">
+                                                <div class="radio">
+                                                    <label id="radio"><input type="radio" class ="rad" name="optradio" id="optradio" value="1">Development</label>
+                                                </div>
+                                                <div class="radio">
+                                                    <label id="radio"><input type="radio" class="rad" name="optradio" id="optradio" value="2">Research Based</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Set the privacy of your project</label>
+                                            <br>
+                                            <br />
+                                            <div class="col-sm-12">
+                                                <div id="checkboxdiv" style="margin-left:140px;margin-right:140px" class="col-sm-8">
+                                                    <div class="checkbox" style="margin-left:15px;">
+                                                        <label class="checkbox"><input type="checkbox" class="check" name="sectionName" value="1" id="chck1">SE Morning</label>
+                                                    </div>
+                                                    <div class="checkbox" style="margin-left:15px;">
+                                                        <label class="checkbox"><input type="checkbox" class="check"  name="sectionName" value="2" id="chck2">SE Afternoon</label>
+                                                    </div>
+                                                    <div class="checkbox" style="margin-left:15px;">
+                                                        <label class="checkbox"><input type="checkbox" class="check"  name="sectionName" value="3" id="chck3">CS Morning</label>
+                                                    </div>
+                                                    <div class="checkbox" style="margin-left:15px;">
+                                                        <label class="checkbox"><input type="checkbox" class="check"  name="sectionName" value="4" id="chck4">CS Afternoon</label>
+                                                    </div>
+                                                    <div class="checkbox" style="margin-left:15px;">
+                                                        <label class="checkbox"><input type="checkbox" class="check"  name="sectionName" value="5" id="chck5">IT Morning</label>
+                                                    </div>
+                                                    <div class="checkbox" style="margin-left:15px;">
+                                                        <label class="checkbox"><input type="checkbox" class="check"  name="sectionName" value="6" id="chck6">IT Afternoon</label>
+                                                    </div>
+                                                    <div class="checkbox" style="margin-left:15px;">
+                                                        <label class="checkbox"><input type="checkbox" class="check"  name="sectionName" value="7" id="chck7">Faculty</label>
+                                                    </div>
+                                                    <div class="checkbox" style="margin-left:15px;">
+                                                        <label class="checkbox"><input type="checkbox" class="check" name="sectionName" value="8" id="chck8">Project Office</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br /><div class="form-group">
+                                            <label class="col-sm-3 control-label">AddMembers</label>
+                                            <br>
+                                            <div id="addMemberss" class="col-sm-6 input-group" style="margin-left:150px">
+                                                <input class="form-control" id="addMembers" name="addMembers" type="text" style="background-color:#f2f2f2;width:245px;display:inline">
+                                                <span class="input-group-btn" style="display:inline-block">
+                                                    <button class="btn btn-sm btn-primary" type="submit" id="memberbtn">
+                                                        <i class="ace-icon fa fa-check"></i>
+                                                        AddMember
+                                                    </button>
+                                                </span>
+                                            </div>
+                                            <div style="background-color:#f2f2f2;width:245px;margin-left:150px;">
+                                                <table class="form-group" id="tblMember" style="margin-left:10px"></table>
+                                            </div>
+
+                                        </div>
+                                        <br>
+                                        <div class="form-group">
+                                            <div class="col-sm-6">
+                                                <button type="submit" class="btn btn-sm btn-primary" id="submitbtn" style="margin-left:432px">Submit</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+@{
+    Html.RenderAction("YesNoModal", "Partial");
+}
+
+@*<div class="form-group">
+        <label class="col-sm-3 control-label">AddMembers</label>
+        <br>
+        <div class="col-sm-6" style="border:none;background-color:#f2f2f2;margin-left:10px;margin-right:10px;width:587px;">
+            <input class="form-control" id="addMembers" name="addMembers" type="text" style="border-color:#c2d6d6;background-color:#f2f2f2;margin-left:-13px;width:300px;display:inline">
+            @*    <button type="submit" class="btn btn-default" id="memberbtn1s" style="background-color:aquamarine">ADDMember</button>
+            <button class="btn btn-sm btn-primary" type="submit" id="memberbtn" style="margin-left:332px;display:inline-block">
+                <i class="ace-icon fa fa-check"></i>
+                AddMember
+            </button>
+        </div>
+    </div>*@
+
+
+
+
+
+
+

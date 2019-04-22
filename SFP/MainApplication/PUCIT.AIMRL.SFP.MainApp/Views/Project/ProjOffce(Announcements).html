@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container" style="width:90%;margin: auto;">
+
+  <form class="form-horizontal">
+    <div class="form-group">
+      <h2>Project Office/Announcements</h2>
+      <label class="col-sm-3 control-label" >Title</label>
+      <br>
+      <div class="col-sm-6">
+        <input class="form-control" id="title" type="text" placeholder="Enter title of your project.">
+      </div>
+    </div>
+    <br>
+    <div class="form-group">
+      <label class="col-sm-3 control-label" >Description</label>
+      <br>
+      <div class="col-sm-6">
+        <textarea class="form-control" rows="5" id="comment" placeholder="Provide description of your project"></textarea>
+      </div>
+    </div>
+    <br>
+      <div class="form-group">
+        <label class="col-sm-3 control-label" >Send to</label>
+        <br>
+        <div class="col-sm-2">
+          <select id="selSection" class="form-control">
+            <option value="" selected>Section</option>
+            <option value="bsef15m">BSEF15M</option>
+            <option value="bsef15a">BSEF15A</option>
+            <option value="bcsf15m">BCSF15M</option>
+            <option value="bcsf15a">BCSF15A</option>
+            <option value="bitf15m">BITF15M</option>
+            <option value="bitf15a">BITF15A</option>
+            <option value="mcsf15m">MCSF15M</option>
+            <option value="mcsf15a">MCSF15A</option>
+          </select>
+        </div>
+        <br>
+        <br>
+        <div class="col-sm-2 control-label" style="margin-left: 309px;margin-top: 20px">
+          <select id="selProf" class="form-control">
+            <option value="">Professor</option>
+            <option value="bilal shehzad">Bilal Shehzad</option>
+            <option value="fareed-ul-hassan">Fareed-ul-Hassan</option>
+            <option value="ejaz ashraf">Ejaz Ashraf</option>
+            <option value="asim azhar">Asim Azhar</option>
+            <option value="kashif murtaza">Kashif Murtaza</option>
+            <option value="murtaza yusuf">Murtaza Yusuf</option>
+          </select>
+        </div>
+      </div>
+     <br>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Due Date</label>
+      <br>
+      <input type="date" name="calender"  id="calender" style="margin-left: 17px;">
+    </div>
+    <br>
+
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-default" id="submitbtn" >Submit</button>
+    </div>
+  </form>
+
+
+</div>
+</body>
+</html>

@@ -1,0 +1,178 @@
+﻿
+    
+    .dropdown-menu {
+        width: 300px !important;
+        height: 400px !important;
+    }
+    .form-control{
+	display: block;
+	width: 100%;
+	font-size: 1rem;
+	color: #495057;
+	background-color: #fff;
+	background-clip: padding-box;
+	border : 1px solid #ced4da;
+
+    }
+    .label-proj
+    {
+	margin-top: 20px;
+    }
+    .container-Proj
+    {
+	    margin-right:0px ; 
+	    padding-bottom: 20px;
+	    outline: 2px solid lightgrey; 
+	    background-color:white; 
+	    width: 80%;
+	    margin:auto;
+	    margin-left:0px;
+        margin-top:15px
+    }
+    .row-Proj
+    {
+	    margin-top: 20px;
+    }
+.sidenav {
+    height: 70vh; /*remove this if you want "auto" height*/
+    width: 250px; /*Set the width of the sidebar */
+    position: fixed; /*Fixed Sidebar (stay in place on scroll)*/
+    top: 18%; /*Stay at the top*/
+    left: 0;
+    background-color: white;
+    overflow-x: auto; /*Disable horizontal scroll*/
+    overflow-y: auto;
+    padding-top: 20px;
+    margin-right: 100px;
+}
+
+    /*     The navigation menu links */
+    .sidenav a {
+        padding-right: 8%;
+        padding-left: 50px; 
+        text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+        
+    }
+
+        /* When you mouse over the navigation links, change their color*/ 
+    .sidenav a:hover {
+        color: #111;
+    }
+     .description{
+         display:block;
+         width:400px;
+     }
+     .widgets{
+
+     }
+     .posts{
+
+     }
+/*set margin for media screens for posts and widgets*/
+      @media screen and (max-width: 767px) {
+      .widgets {
+        height: auto;
+      }
+      .posts {height:auto;} 
+    }
+/* user Profile css */
+/* USER PROFILE PAGE */
+ .twPc-div {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #e1e8ed;
+    border-radius: 6px;
+    height: 200px;
+    max-width: 1500px; /* orginal twitter width: 290px;*/
+}
+.twPc-bg {
+    background-image: url('../../images/gallery/BCSF15M019.jpg');
+    background-position: 0 50%;
+    background-size: 100% auto;
+    border-bottom: 1px solid #e1e8ed;
+    border-radius: 4px 4px 0 0;
+    height: 140px;
+    width: 100%;
+}
+.twPc-block {
+    display: block !important;
+}
+.twPc-button {
+    margin: -35px -10px 0;
+    text-align: right;
+    width: 100%;
+}
+.twPc-avatarLink {
+    background-color: #fff;
+    border-radius: 6px;
+    display: inline-block !important;
+    float: left;
+    margin: -30px 5px 0 8px;
+    max-width: 100%;
+    padding: 1px;
+    vertical-align: bottom;
+}
+.twPc-avatarImg {
+    border: 2px solid #fff;
+    border-radius: 7px;
+    box-sizing: border-box;
+    color: #fff;
+    height: 100px;
+    width: 120px;
+}
+.twPc-divUser {
+    margin: 5px 0 0;
+}
+.twPc-divName {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 21px;
+    margin-left:120px;
+}
+.twPc-divName a {
+    color: dodgerblue !important;
+}
+.twPc-divStats {
+    margin-left: 250px;
+    padding: 10px 0;
+}
+.twPc-Arrange {
+    box-sizing: border-box;
+    display: table;
+    margin: 0;
+    min-width: 100%;
+    padding: 0;
+    table-layout: auto;
+}
+ul.twPc-Arrange {
+    list-style: outside none none;
+    margin: 0;
+    padding: 0;
+}
+.twPc-ArrangeSizeFit {
+    display: table-cell;
+    padding: 0;
+    vertical-align: top;
+}
+.twPc-ArrangeSizeFit a:hover {
+    text-decoration: none;
+}
+.twPc-StatValue {
+    display: block;
+    font-size: 18px;
+    font-weight: 500;
+    transition: color 0.15s ease-in-out 0s;
+}
+.twPc-StatLabel {
+    color: #000;
+    font-size: 17px;
+    letter-spacing: 0.02em;
+    overflow: hidden;
+    /*text-transform: uppercase;*/
+    transition: color 0.15s ease-in-out 0s;
+    margin-top:10px
+}
+/* endOfProfile */
+

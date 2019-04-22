@@ -1,0 +1,128 @@
+﻿
+@{
+    ViewBag.Title = "allProj";
+}
+<div class="container" style="margin-top: 20px">
+    <div id="project-div"></div>
+    <!--<div class="container">
+        <div class="row">
+
+            <div class="col-sm-2">
+                <image src="~/images/gallery/123.jpg" class= "img img-rounded img-responsive">
+            </div>
+            <div class="col-sm-10">
+                <div><span>name</span></div><br>
+                <div><span>rollno</span></div><br>
+                <div><span>section</span></div>
+                <div><span><button>EditProfile</button></span></div>
+            </div>
+
+        </div>
+    </div>
+        -->
+    <script id="ProjectTemplate" type="text/x-handlebars-template">
+        {{#each ProjectList}}
+
+        <div class="container">
+            <!--  <form action="" method="get" style="border:double ;margin-top: 20px; margin-right: 250px; line-height: 30px ;margin-bottom: 30px">-->
+            <div style="border:double ;margin-top: 20px; margin-right: 250px; line-height: 30px ;margin-bottom: 30px">
+                <div class="container form-group" style="margin-right: 250px">
+
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <!-- PAGE CONTENT BEGINS -->
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="container" style="margin-top: 20px">
+                                        <input type="text" class="_DprojectId" id="ProjectId" value="{{ProjectId}}" hidden />
+                                        <label style="margin-top: 20px"><b>Title : </b></label>
+                                        <span>{{ProjectTitle}}</span>
+                                        <div class="row" style="margin-top: 20px">
+                                            <div class="col-sm-12">
+                                                <div class="row" style="margin-top: 20px">
+                                                    <div class="col-sm-3">
+                                                        <label><b>Description: </b></label>
+                                                    </div>
+                                                    <div class="col-sm-9">
+                                                        <span>
+                                                            {{Description}}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <label style="margin-top: 20px"><b>Type : </b></label>
+                                        <span>
+                                            {{Type}}
+                                        </span>
+                                        <br>
+                                        <!--<label style="margin-top: 20px">Members : </label>
+                                        <span>
+
+                                        </span>-->
+                                        <div class="row bg-primary" style="margin-top: 20px;max-width: 800px">
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+
+                                                        <button id="btnUpvote" class="btn-primary btn-lg btn" style="border-style: none;" name="UpVote" value="{{TotalUpVote}}" onclick="return MyWebApp.UI.Project.increamentVote(this)">UpVote({{TotalUpVote}})</button>
+
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <span>
+                                                            <button class="btn-lg btn-primary  btn" style="border-style: none;" name="DownVote" value="{{TotalDownVote}}" onclick="MyWebApp.UI.Project.increamentVote(this)">DownVote({{TotalDownVote}})</button>
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <!--<span>
+                                                            <button class="btn-lg btn-primary btn" value="bid" style="border-style: none;padding-left:18px">Drop</button>
+                                                        </span>-->
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <span>
+                                                            <button class="btn-lg btn-primary btn" style="border-style: none;padding-left:0px" name="Bid" value="{{BidCount}}" onclick="MyWebApp.UI.Project.increamentVote(this)"> Bid({{BidCount}})</button>
+                                                        </span>
+                                                    </div>
+                                                    <!--
+
+                                                    <div class="col-sm-2">
+                                                        <span>
+                                                               <button class="btn-lg btn-primary btn" value="bid" style="border-style: none;padding-left:25px">Edit</button>
+                                                        </span>
+                                                    </div>
+                                                        -->
+                                                    <!--<span>
+                                                    <div class="col-sm-2">
+                                                            <button class="btn-lg btn-primary btn" value="bid" style="border-style: none;">Bid</button>
+                                                        </span>
+                                                    </div>
+                                                    -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="comment" style="margin-top: 20px">Comment:</label>
+                                            <textarea class="form-control" rows="1" id="comment" style="width: 800px"></textarea>
+                                        </div>
+                                        <div>
+                                            <span>
+                                                <a href="#">Load Comments</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div><!-- /.row -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- </form>-->
+        </div>
+        {{/each}}
+    </script>
+</div>
+<h2>Projects</h2>
+
+<h2>allProj</h2>
+

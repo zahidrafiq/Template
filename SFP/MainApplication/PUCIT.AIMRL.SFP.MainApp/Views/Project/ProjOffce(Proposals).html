@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#proposalsTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+
+</head>
+<body>
+
+<div class="container" >
+<div class="container" id="mainDiv" style="margin-top: 100px;">
+   <h2>Project Office/Proposals</h2>
+   <br>
+ <label style="margin-left: 130px">Sections</label>
+ 
+ <input class="form-control " id="myInput" type="text" placeholder="Search.." >
+  <label style="margin-left: 25px">Professor</label>
+  <select  id="sel1" style="border-radius: 4px">
+      <option value="professor" selected>----</option>
+      <option value="Bilal Shehzad">Bilal Shehzad</option>
+      <option value="Freed-ul-Hassan">Freed-ul-Hassan</option>
+      <option value="Nastaeen Fatima">Nastaeen Fatima</option>
+  </select>
+  <label style="margin-left: 10px">Time</label>
+   <input type="date" name="calender"  id="calender" >
+  <label style="margin-left: 10px">Status</label>
+  <select  id="sel3" style="border-radius: 4px">
+     <option value="professor" selected>----</option>
+     <option value="Bilal Shehzad">Done</option>
+     <option value="Freed-ul-Hassan">Reviewing</option>
+     <option value="Nastaeen Fatima">Incomplete</option>
+  </select>
+ <div class="container col-sm-10" id="proposalsDiv">
+  <table class="table table-striped table-bordered table-hover table-condensed" id="proposalsTable">
+    <thead>
+      <tr>
+        <th style="width:5%;">#</th>
+        <th style="width:50%">Projects</th>
+        <th>D1 Status</th>
+        <th>D1 Marks</th>
+        <th>D2 Status</th>
+        <th>D2 Marks</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td id="serialNo">1</td>
+        <td><a href="#" >Student Faculty Portal</a></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td><a href="#" >Library Management System</a></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td><a href="#" >Car Data Elementry</a></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td><a href='#'>Learning Of Optimal Driver Personality Profile</a></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+ </div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,277 @@
+﻿@{
+    Layout = "~/Views/Shared/_MainLayout1.cshtml";
+}
+
+@section Header
+    {
+     <script type="text/javascript" src="@Url.Content("~/Scripts/mywebapp/UserWall/mywebapp.ui.userwall.js")?s=@DateTime.UtcNow.Ticks"></script>
+    <!-- from homewall-->
+    <script src="~/Scripts/mywebapp/Projects/mywebapp.ui.projects.js"></script>
+
+    }
+@section scripts
+{
+
+    <script type="text/javascript">
+        //debugger;
+        $(function () {
+            if(@ViewBag.UserId==-1)
+            {
+                UserId = @ViewBag.CurrentUserId;
+            }
+            else
+            {
+                UserId = @ViewBag.UserId;
+            }
+            MyWebApp.UI.UserWall.readyMain(UserId);
+        });
+
+    </script>
+}
+@*@section BreadCrumb
+    {
+        <li>
+            <a href='@Url.Content("~/UserWall/UserWall/")'>User Wall</a>
+        </li>
+    }*@
+
+<div class="container" style="max-width:2000px;background-color:gainsboro;margin-top:0px">
+    <div class="container">
+        <div class="row" style="margin-top:20px">
+            <div class="col-sm-2">
+                <image id="UserImage" src="" alt="No Image Found" class="img img-rounded img-responsive">
+                   
+                     @{
+                        if (@ViewBag.UserId == -1)
+                        {
+                            <div>
+                                <label for="uploadProfilePic">Update</label>
+                                <input id="uploadProfilePic" onchange="MyWebApp.UI.UserWall.editProfilePic()" type="file" accept="image/*" style="visibility: hidden">
+                            </div>
+                        }
+                    }
+
+            </div>
+            <div class="col-sm-10" style="margin-bottom:20px">
+                <div>
+                    <label>
+                        <span class="_DeditUserName">
+                            <b>
+                                Name:
+                            </b>
+                        </span>
+                    </label>
+                    <span id="UserName">
+                    </span>
+                </div>
+                <br />
+                <div>
+                    <label>
+                        <span class="_DeditUserEmail">
+                            <b>
+                                Email:
+                            </b>
+                        </span>
+                    </label>
+                    <span id="UserEmail">
+
+                    </span>
+                </div>
+                <br>
+                <div>
+                    <label>
+                        <span class="_DeditUserRegistration">
+                            <b>
+                                Registration Number:
+                            </b>
+                        </span>
+                    </label>
+                    <span id="UserRegistrationNumber">
+
+                    </span>
+                </div>
+
+
+                <br>
+                @*<div>
+                        <label>
+                            <span>
+                                <b>
+                                    Section:
+                                </b>
+                            </span>
+                        </label>
+                        <span id="UserSection">
+
+                        </span>
+                    </div>*@
+                <div>
+                    <span class="editButton">
+                        @{
+                            if (@ViewBag.UserId == -1)
+                            {
+                                <button id="editUserProfile" value=@ViewBag.CurrentUserId onclick="MyWebApp.UI.UserWall.editUserProfile()">Edit Profile</button>
+                            }
+                        }
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row posts" style="margin-top :20px;margin-left:auto">
+        <!-- Project Content Column -->
+        <div class="col-lg-8 posts">
+            <!-- Project area -->
+            <div id="project-div"></div>
+            <script id="ProjectTemplate" type="text/x-handlebars-template">
+                {{#each ProjectList}}
+
+                <!-- Project CONTENT BEGINS -->
+                <div class="container-Proj" style="border:1px solid #aaa;background-color:white" ">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="_DContainer" style="margin-top: 20px ; margin-left : 40px;">
+                                <input type="text" id="ProjectId" value="{{ProjectId}}" hidden />
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="row" style="margin-top: 20px">
+                                            <div class="col-sm-12">
+                                                <center>
+                                                    <span style="color:#4d79ff;font-size:20px;padding:10px">
+                                                        <b>{{ProjectTitle}}</b>
+                                                    </span>
+                                                </center>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 label-proj">
+                                        <div class="row" style="margin-top: 20px">
+                                            <div class="col-sm-3">
+                                                <label><b>Initiated By : </b></label>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <span>
+                                                    <a href=@Url.Content("~/UserWall/UserWall?UserId={{UserId}}")>{{InitiatedBy}}</a>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 20px">
+                                    <div class="col-sm-12">
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <label><b>Description: </b></label>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <div class="description">
+                                                    {{Description}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin-top: 20px">
+                                    <div class="col-sm-12">
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <label><b>Type: </b></label>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <span>
+                                                    {{Type}}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row UpDownContainer btn-group" style="max-width:1000px">
+                                    <div class="col-sm-4">
+                                        <button id="btnUpvote" class="btn-primary btn-lg btn-block btn" style="border-style: none;padding-left:20px;padding-right:40px" name="UpVote" value="{{TotalUpVote}}" onclick="return MyWebApp.UI.Project.Vote(this)"> UpVote({{TotalUpVote}})</button>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <span>
+                                            <button id="btnDownVote" class="btn-lg btn-primary btn-block  btn" style="border-style: none;padding-left:20px;padding-right:40px" name="DownVote" value="{{TotalDownVote}}" onclick="MyWebApp.UI.Project.Vote(this)">  DownVote({{TotalDownVote}})</button>
+                                        </span>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <span>
+                                            <button class="btn-lg btn-primary btn-block btn" style="border-style: none;padding-left:20px;padding-right:40px" name="Bid" value="{{BidCount}}" onclick="MyWebApp.UI.Project.Bid(this)"> Bid({{BidCount}})</button>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <br />
+                                <div class="_DCommentDiv">
+                                    <div class="card my-4">
+                                        <h5 class="card-header">Leave a Comment:</h5>
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <textarea class="_DUserCommentBox form-control" rows="4"></textarea>
+                                            </div>
+                                            <button class="btn btn-primary _DbtnComment" onclick="return MyWebApp.UI.Project.Comment(this,event);">Submit</button>
+                                        </div>
+                                    </div>
+                                    <div class="_DCommentBox{{ProjectId}}"></div><br><!--All Comments will be appended in this div-->
+                                    <h5><a class="_DLoadComments" href="#" onclick="return MyWebApp.UI.Project.Comment(this,event);">Load Comments</a></h5>
+                                </div>
+                                <!-- -------------------------------------------------------->
+                            </div><!-- /.row -->
+                        </div>
+                        <!--end of projContainer-->
+                    </div>
+                </div>
+                {{/each}}
+            </script>
+            <div id="_DCommentBoxStruct" class="media mb-4" hidden>
+                <img class="d-flex mr-3 rounded-circle _dUsrImage" src="@Url.Content("~/images/avatars/favicon.ico")" style="height :30px">
+                <div class="media-body">
+                    <div><a href="#" class="mt-0"><b class="_DName">  </b></a><span class="ml-4 _Ddate">  </span></div>
+                    <span class="_DCommentText">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</span>
+                </div>
+            </div>
+        </div>
+        <!-- Sidebar Widgets Column -->
+        <div class="col-md-4">
+            <!-- Search Widget -->
+            <div class="card my-4">
+                <h5 class="card-header">Search</h5>
+                <div class="card-body">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search for...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-secondary" type="button">Go!</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <!-- Categories Widget -->
+            <div class="card my-4">
+                <h5 class="card-header">Categories</h5>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <ul class="list-unstyled mb-0">
+                                <li>
+                                    <a href="#">Development</a>
+                                </li>
+                                <li>
+                                    <a href="#">Research</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+</div>

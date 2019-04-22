@@ -1,0 +1,43 @@
+h1 {
+    color: #4d79ff;
+    font-family: Comic Sans MS;
+}
+label {
+	color: #4d79ff;
+	font-size:18px;
+}
+label.checkbox{
+
+	font-size: 14px;
+	color: #4d4d4d
+}
+label#radio {
+
+	font-size: 14px;
+	color: #4d4d4d;
+	font-weight: lighter;
+}
+body {
+		font-family: Comic Sans MS;
+
+}
+.form-control {
+	background-color: #f2f2f2;
+}
+div #checkboxdiv{
+	height: 100px;
+	overflow-y: scroll;
+	background-color:#f2f2f2;
+	border-style:solid;
+	border-width: thin;
+	border-color:#c2d6d6;
+	margin-left: 300px;
+	align-content: center;
+}
+button#submitbtn {
+	background-color:#66b3ff;
+	font-family: Comic Sans MS;
+	color:#262626;
+	font-weight:normal;
+	margin-left: 600px;
+}

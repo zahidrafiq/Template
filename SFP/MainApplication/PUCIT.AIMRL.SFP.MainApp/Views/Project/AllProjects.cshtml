@@ -1,0 +1,297 @@
+﻿@{
+    Layout = "~/Views/Shared/_MainLayout1.cshtml";
+    ViewBag.Title = "Projects";
+
+}
+
+@section scripts
+{
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="@Url.Content("~/Scripts/mywebapp/Projects/mywebapp.ui.projects.js")?s=@DateTime.UtcNow.Ticks"></script>
+    <script type="text/javascript">
+        $(function () {
+            MyWebApp.UI.Project.readyMain();
+        });
+    </script>
+    <script>
+        $(document).ready(function(){
+        $("#myBtn").click(function(){
+           $("#myModal").modal();
+         });
+        });
+    </script>
+
+}
+@section BreadCrumb
+    {
+        <li>
+            <a href='@Url.Content("~/Project/AllProjects")'>Projects</a>
+        </li>
+    }
+<style>
+    .modal-header, h4.post, .close{
+      background-color:#62A8D1 !important;
+      color:white !important;
+      text-align: center;
+      font-size: 30px;
+  }
+  .modal-footer {
+      background-color:#f9f9f9;
+  }
+
+</style>
+<!-- Page Content -->
+<div class="container">
+    <!--Modal Start-->
+    <!-- Trigger the modal with a button -->
+    <div style="height:70px;background-color:white;width:578px;margin-left:14px;margin-top:20px;border-color:whitesmoke;border-style:initial">
+        <button type="button" class="btn  btn-block" id="myBtn" style="background-color:#62A8D1 !important;margin-top:30px;width:538px;margin-left:20px;border:1px solid">
+            <span class="glyphicon glyphicon-tag"></span> CreatePost
+        </button>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header" style="padding:10px 15px;">
+                    <h4 class="post"><span class="glyphicon glyphicon-edit"></span> Post</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                   
+                </div>
+                <div class="modal-body" style="padding:40px 50px;">
+                    <form role="form">
+                        <div class="form-group">
+                            <textarea class="form-control" rows="10" id="comment" placeholder="Write post..." style="background-color: #ffffff;"></textarea>
+                        </div>
+                        <div class="form-group"  style="display:inline">
+                            <label for="uploadProfilePic"><span class="glyphicon glyphicon-paperclip"></span>Attach File</label>
+                            <input id="uploadProfilePic" onchange="" type="file" accept="file/*" style="visibility: hidden">
+                        </div>
+                        @*<div class="dropdown form-group" style="display:inline">
+                            <button class="btn dropdown-toggle" type="button" id="menu1" data-toggle="dropdown" style="background-color:#62A8D1 !important;border:1px solid">Select Audience
+                            </button>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">W3Schools</a></li>
+                                <li role="presentation" class="divider"></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">HTML</a></li>
+                                <li role="presentation" class="divider"></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">CSS</a></li>
+                                <li role="presentation" class="divider"></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">About Us</a></li>
+                            </ul>
+                        </div>*@
+
+                     </form>  
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success btn-block" id="sharebtn" style="background-color:#62A8D1 !important;border-color:whitesmoke;border-style:initial;">
+                        <span class="glyphicon glyphicon-share"></span> Share
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!--Modal End-->
+    <div class="row posts" style="margin-top :10px;margin-left:auto">
+        <!-- Project Content Column -->
+        <div class="col-lg-8 posts">
+
+            <!-- Project area -->
+
+            <div id="project-div"></div>
+            <script id="ProjectTemplate" type="text/x-handlebars-template">
+
+                {{#each ProjectList}}
+
+
+                <!-- Project CONTENT BEGINS -->
+                <div class="container-Proj" style="border:1px solid #aaa">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="_DContainer" style="margin-top: 20px ; margin-left : 40px;">
+                                <input type="text" id="ProjectId" value="{{ProjectId}}" hidden />
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="row" style="margin-top: 20px">
+                                            <div class="col-sm-12">
+                                                <center>
+                                                    <span style="color:#4d79ff;font-size:20px;padding:10px">
+                                                        <b>{{ProjectTitle}}</b>
+                                                    </span>
+                                                </center>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 label-proj">
+                                        <div class="row" style="margin-top: 20px">
+                                            <div class="col-sm-3">
+                                                <label><b>Initiated By : </b></label>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <span>
+                                                    <a href=@Url.Content("~/UserWall/UserWall?UserId={{UserId}}")>{{InitiatedBy}}</a>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 20px">
+                                    <div class="col-sm-12">
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <label><b>Description: </b></label>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <div class="description">
+                                                    {{Description}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin-top: 20px">
+                                    <div class="col-sm-12">
+                                        <div class="row" >
+                                            <div class="col-sm-3">
+                                                <label><b>Type: </b></label>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <span>
+                                                    {{Type}}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row UpDownContainer btn-group" style="max-width:1000px">
+                                    <div class="col-sm-4">
+
+                                        <button id="btnUpvote" class="btn-primary btn-lg btn-block btn" style="border-style: none;padding-left:20px;padding-right:40px" name="UpVote" value="{{TotalUpVote}}" onclick="return MyWebApp.UI.Project.Vote(this)"><!--<i class="glyphicon glyphicon-thumbs-up"></i>-->  UpVote({{TotalUpVote}})</button>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <span>
+                                            <button id="btnDownVote" class="btn-lg btn-primary btn-block  btn" style="border-style: none;padding-left:20px;padding-right:40px" name="DownVote" value="{{TotalDownVote}}" onclick="MyWebApp.UI.Project.Vote(this)"><!--<i class="glyphicon glyphicon-thumbs-down"></i>-->  DownVote({{TotalDownVote}})</button>
+                                        </span>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <span>
+                                            <button class="btn-lg btn-primary btn-block btn" style="border-style: none;padding-left:20px;padding-right:40px" name="Bid" value="{{BidCount}}" onclick="MyWebApp.UI.Project.Bid(this)"><!--<i class="fa fa-hand-paper-o"></i>-->  Bid({{BidCount}})</button>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <br />
+                                <div class="_DCommentDiv">
+                                    <div class="card my-4">
+                                        <h5 class="card-header">Leave a Comment:</h5>
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <textarea class="_DUserCommentBox form-control" rows="4"></textarea>
+                                            </div>
+                                            <button class="btn btn-primary _DbtnComment" onclick="return MyWebApp.UI.Project.Comment(this,event);">Submit</button>
+                                        </div>
+                                    </div>
+                                    <div class="_DCommentBox{{ProjectId}}"></div><br><!--All Comments will be appended in this div-->
+                                    <h5><a class="_DLoadComments" href="#" onclick="return MyWebApp.UI.Project.Comment(this,event);">Load Comments</a></h5>
+                                </div>
+                                <!-- -------------------------------------------------------->
+
+                            </div><!-- /.row -->
+                        </div>
+
+                        <!--end of projContainer-->
+                    </div>
+                </div>
+                {{/each}}
+            </script>
+
+            <div id="_DCommentBoxStruct" class="media mb-4" hidden>
+                <img class="d-flex mr-3 rounded-circle _DUsrImage" src="@Url.Content("~/images/avatars/favicon.ico")" style="height :30px">
+                <div class="media-body">
+                    <div><a href="asaa" class="mt-0"><b class="_DName">  </b></a><span class="ml-4 _Ddate">  </span></div>
+                    <span class="_DCommentText">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar Widgets Column -->
+        <div class="col-md-4">
+
+            <!-- Search Widget -->
+            <div class="card my-4">
+                <h5 class="card-header">Search</h5>
+                <div class="card-body">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search for...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-secondary" type="button">Go!</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categories Widget -->
+            <div class="card my-4">
+                <h5 class="card-header">Categories</h5>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <ul class="list-unstyled mb-0">
+                                <li>
+                                    <a href="#">Development</a>
+                                </li>
+                                <li>
+                                    <a href="#">Research</a>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                        <!--<div class="col-lg-6">
+                            <ul class="list-unstyled mb-0">
+                                <li>
+                                    <a href="#">JavaScript</a>
+                                </li>
+                                <li>
+                                    <a href="#">CSS</a>
+                                </li>
+                                <li>
+                                    <a href="#">Tutorials</a>
+                                </li>
+                            </ul>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Side Widget -->
+            <!--<div class="card my-4">
+                <h5 class="card-header">Side Widget</h5>
+                <div class="card-body">
+                    You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
+                </div>
+            </div>-->
+            <!-- Side Widget -->
+            <!--<div class="card my-4">
+                <h5 class="card-header">Side Widget</h5>
+                <div class="card-body">
+                    You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
+                </div>
+            </div>-->
+        </div>
+
+    </div>
+    <!-- /.row -->
+
+</div>
+<!-- /.container -->

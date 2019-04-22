@@ -1,0 +1,17 @@
+﻿@{
+    Layout = "~/Views/Shared/_SFPheaderLayout.cshtml";
+}
+@section Header
+{
+    @RenderSection("Header", false)
+}
+@section scripts
+{
+    @RenderSection("scripts", required: false)
+}
+
+@section BreadCrumb
+{
+    @RenderSection("BreadCrumb", required: false)
+}
+@RenderBody()
